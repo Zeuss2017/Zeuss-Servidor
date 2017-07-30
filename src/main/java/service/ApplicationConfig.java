@@ -34,6 +34,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(security.AuthFilter.class);     
+        resources.add(security.CorsFilter.class);
         resources.add(service.ActividadFacadeREST.class);
         resources.add(service.AuthService.class);
         resources.add(service.ColegioFacadeREST.class);

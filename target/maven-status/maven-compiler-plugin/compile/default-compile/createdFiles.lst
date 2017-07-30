@@ -11,6 +11,7 @@ service\AbstractFacade.class
 service\ActividadFacadeREST.class
 service\ApplicationConfig.class
 entity\Colegio_.class
+security\CorsFilter.class
 entity\Respuesta_.class
 entity\ResultadoAct.class
 service\CursoFacadeREST.class

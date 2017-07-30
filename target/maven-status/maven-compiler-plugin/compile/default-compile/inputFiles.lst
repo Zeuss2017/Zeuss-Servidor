@@ -1,21 +1,22 @@
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\ColegioFacadeREST.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\ProfesorFacadeREST.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\ActividadFacadeREST.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\Profesor.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\Curso.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\EjercicioFacadeREST.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\Actividad.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\Respuesta.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\ResultadoActPK.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\Ejercicio.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\AuthService.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\EstudianteFacadeREST.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\security\AuthFilter.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\RespuestaFacadeREST.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\Colegio.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\AbstractFacade.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\Estudiante.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\CursoFacadeREST.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\ResultadoActFacadeREST.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\service\ApplicationConfig.java
-C:\Users\MARIAJOSEMENDOZA\Documents\Tesis\proyecto\Sin angular\Zeuss\src\main\java\entity\ResultadoAct.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\ResultadoAct.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\AuthService.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\Profesor.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\ResultadoActFacadeREST.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\Colegio.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\Respuesta.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\AbstractFacade.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\Curso.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\Estudiante.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\Ejercicio.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\Actividad.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\EjercicioFacadeREST.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\EstudianteFacadeREST.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\ProfesorFacadeREST.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\ApplicationConfig.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\security\AuthFilter.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\CursoFacadeREST.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\ActividadFacadeREST.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\RespuestaFacadeREST.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\ResultadoActPK.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\security\CorsFilter.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\ColegioFacadeREST.java
