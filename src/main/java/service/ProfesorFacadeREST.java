@@ -132,6 +132,12 @@ public class ProfesorFacadeREST extends AbstractFacade<Profesor> {
         return String.valueOf(valor);
 
     }
+        @GET
+    @Path("/colegio/{userName}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Colegio Colegio( @PathParam("userName") String userName)  {
+          return findByUsername(userName).getColegioid();
+    }
     
  
 

@@ -35,7 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Ejercicio.findAll", query = "SELECT e FROM Ejercicio e")
     , @NamedQuery(name = "Ejercicio.findById", query = "SELECT e FROM Ejercicio e WHERE e.id = :id")
-    , @NamedQuery(name = "Ejercicio.findByEnunciado", query = "SELECT e FROM Ejercicio e WHERE e.enunciado = :enunciado")
+    , @NamedQuery(name = "Ejercicio.findByEnunciado1", query = "SELECT e FROM Ejercicio e WHERE e.enunciado1 = :enunciado1")
+    , @NamedQuery(name = "Ejercicio.findByEnunciado2", query = "SELECT e FROM Ejercicio e WHERE e.enunciado2 = :enunciado2")
+    , @NamedQuery(name = "Ejercicio.findByEnunciado3", query = "SELECT e FROM Ejercicio e WHERE e.enunciado3 = :enunciado3")
     , @NamedQuery(name = "Ejercicio.findByNivel", query = "SELECT e FROM Ejercicio e WHERE e.nivel = :nivel")})
 public class Ejercicio implements Serializable {
 
@@ -48,8 +50,18 @@ public class Ejercicio implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
-    @Column(name = "enunciado")
-    private String enunciado;
+    @Column(name = "enunciado1")
+    private String enunciado1;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "enunciado2")
+    private String enunciado2;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "enunciado3")
+    private String enunciado3;
     @Basic(optional = false)
     @NotNull
     @Column(name = "nivel")
@@ -70,9 +82,11 @@ public class Ejercicio implements Serializable {
         this.id = id;
     }
 
-    public Ejercicio(Integer id, String enunciado, int nivel) {
+    public Ejercicio(Integer id, String enunciado1,String enunciado2,String enunciado3,int nivel) {
         this.id = id;
-        this.enunciado = enunciado;
+        this.enunciado1 = enunciado1;
+        this.enunciado2 = enunciado2;
+        this.enunciado3 = enunciado3;
         this.nivel = nivel;
     }
 
@@ -84,12 +98,28 @@ public class Ejercicio implements Serializable {
         this.id = id;
     }
 
-    public String getEnunciado() {
-        return enunciado;
+    public String getEnunciado1() {
+        return enunciado1;
     }
 
-    public void setEnunciado(String enunciado) {
-        this.enunciado = enunciado;
+    public void setEnunciado1(String enunciado) {
+        this.enunciado1 = enunciado;
+    }
+
+    public String getEnunciado2() {
+        return enunciado2;
+    }
+
+    public void setEnunciado2(String enunciado2) {
+        this.enunciado2 = enunciado2;
+    }
+
+    public String getEnunciado3() {
+        return enunciado3;
+    }
+
+    public void setEnunciado3(String enunciado3) {
+        this.enunciado3 = enunciado3;
     }
 
     public int getNivel() {
