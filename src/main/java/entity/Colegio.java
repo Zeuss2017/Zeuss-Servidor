@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Colegio.findByCiudad", query = "SELECT c FROM Colegio c WHERE c.ciudad = :ciudad")
     , @NamedQuery(name = "Colegio.findByTelefono", query = "SELECT c FROM Colegio c WHERE c.telefono = :telefono")
     , @NamedQuery(name = "Colegio.findByCalendario", query = "SELECT c FROM Colegio c WHERE c.calendario = :calendario")
-    , @NamedQuery(name = "Colegio.findByDireccion", query = "SELECT c FROM Colegio c WHERE c.direccion = :direccion")})
+    , @NamedQuery(name = "Colegio.findByDireccion", query = "SELECT c FROM Colegio c WHERE c.direccion = :direccion")
+    , @NamedQuery(name = "Colegio.findCities", query = "SELECT DISTINCT(c.ciudad) FROM Colegio c")})
 public class Colegio implements Serializable {
 
     private static final long serialVersionUID = 1L;

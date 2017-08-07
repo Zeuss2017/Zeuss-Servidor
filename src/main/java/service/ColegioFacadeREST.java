@@ -5,11 +5,14 @@
  */
 package service;
 
+import entity.Ciudad;
 import entity.Colegio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,7 +21,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -81,6 +86,23 @@ public class ColegioFacadeREST extends AbstractFacade<Colegio> {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(super.count());
+    }
+     @GET
+    @Path("/ciudades")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Ciudad> ciudades() {
+        return em.createNamedQuery("Colegio.findCities",Ciudad.class).getResultList();
+    }
+    
+    @GET
+    @Path("/ciudades/{ciudad}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Colegio> colegiosDeCiudad(@PathParam("ciudad") String ciudad) {
+        Query q=em.createNamedQuery("Colegio.findByCiudad",Colegio.class);
+        q.setParameter("ciudad",ciudad);
+       
+        return q.getResultList();
     }
 
     @Override
