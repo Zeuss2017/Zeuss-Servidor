@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author mariajosemendoza
+ * @author joche
  */
 @Stateless
 @Path("profesor")
@@ -90,7 +90,7 @@ public class ProfesorFacadeREST extends AbstractFacade<Profesor> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-    @GET
+  @GET
     @Path("/find-by-name/{userName}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Profesor findByUsername(@PathParam("userName") String userName) {
@@ -112,7 +112,7 @@ public class ProfesorFacadeREST extends AbstractFacade<Profesor> {
         
         Colegio c=colegioFacadeRest.find(idColegio);
         Profesor p=find(userName);
-        p.setColegioid(c);
+        p.setColegioId(c);
         em.persist(p);
     }
     
@@ -136,11 +136,8 @@ public class ProfesorFacadeREST extends AbstractFacade<Profesor> {
     @Path("/colegio/{userName}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Colegio Colegio( @PathParam("userName") String userName)  {
-          return findByUsername(userName).getColegioid();
+          return findByUsername(userName).getColegioId();
     }
-    
- 
-
     @Override
     protected EntityManager getEntityManager() {
         return em;

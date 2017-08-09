@@ -8,7 +8,6 @@ package entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,49 +24,44 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author mariajosemendoza
+ * @author joche
  */
 @Entity
-@Table(name = "Profesor")
+@Table(name = "profesor")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Profesor.findAll", query = "SELECT p FROM Profesor p")
     , @NamedQuery(name = "Profesor.findByUsername", query = "SELECT p FROM Profesor p WHERE p.username = :username")
-    , @NamedQuery(name = "Profesor.findByContrasena", query = "SELECT p FROM Profesor p WHERE p.contrasena = :contrasena")})
+    , @NamedQuery(name = "Profesor.findByContrasena", query = "SELECT p FROM Profesor p WHERE p.contrasena = :contrasena")
+    , @NamedQuery(name = "Profesor.findByNombre", query = "SELECT p FROM Profesor p WHERE p.nombre = :nombre")})
 public class Profesor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(min = 1, max = 255)
     @Column(name = "username")
     private String username;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 255)
     @Column(name = "contrasena")
     private String contrasena;
+    @Size(max = 255)
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(mappedBy = "profesorusername")
-    private List<Ejercicio> ejercicioList;
-    @JoinColumn(name = "Colegio_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Colegio colegioid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesorusername")
+    @OneToMany(mappedBy = "profesorUsername")
     private List<Curso> cursoList;
+    @JoinColumn(name = "colegio_id", referencedColumnName = "id")
+    @ManyToOne
+    private Colegio colegioId;
+    @OneToMany(mappedBy = "profesorUsername")
+    private List<Ejercicio> ejercicioList;
 
     public Profesor() {
     }
 
     public Profesor(String username) {
         this.username = username;
-    }
-
-    public Profesor(String username, String contrasena) {
-        this.username = username;
-        this.contrasena = contrasena;
     }
 
     public String getUsername() {
@@ -86,21 +80,12 @@ public class Profesor implements Serializable {
         this.contrasena = contrasena;
     }
 
-    @XmlTransient
-    public List<Ejercicio> getEjercicioList() {
-        return ejercicioList;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setEjercicioList(List<Ejercicio> ejercicioList) {
-        this.ejercicioList = ejercicioList;
-    }
-
-    public Colegio getColegioid() {
-        return colegioid;
-    }
-
-    public void setColegioid(Colegio colegioid) {
-        this.colegioid = colegioid;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     @XmlTransient
@@ -112,12 +97,21 @@ public class Profesor implements Serializable {
         this.cursoList = cursoList;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Colegio getColegioId() {
+        return colegioId;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setColegioId(Colegio colegioId) {
+        this.colegioId = colegioId;
+    }
+
+    @XmlTransient
+    public List<Ejercicio> getEjercicioList() {
+        return ejercicioList;
+    }
+
+    public void setEjercicioList(List<Ejercicio> ejercicioList) {
+        this.ejercicioList = ejercicioList;
     }
 
     @Override
@@ -142,7 +136,7 @@ public class Profesor implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.javeriana.universityapp.entity.Profesor[ username=" + username + " ]";
+        return "entity.Profesor[ username=" + username + " ]";
     }
     
 }

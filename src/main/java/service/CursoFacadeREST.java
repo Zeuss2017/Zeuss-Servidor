@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author mariajosemendoza
+ * @author joche
  */
 @Stateless
 @Path("curso")
@@ -45,7 +45,6 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
         super.create(entity);
     }
 
-    
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -86,7 +85,6 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-    
     @GET
     @Path("findByUsername/{username}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -119,16 +117,16 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
         Profesor user = (Profesor) q.setParameter("username", username).getSingleResult();
         Curso c=find(cursoId);
         em.persist(c);
-        c.setProfesorusername(user);
+        c.setProfesorUsername(user);
         List<Curso> cursos=user.getCursoList();
         cursos.add(c);
         user.setCursoList(cursos);
         em.persist(user);
         
     }
-
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
+    
 }

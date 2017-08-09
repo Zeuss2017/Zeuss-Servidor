@@ -7,7 +7,6 @@ package service;
 
 import entity.Ciudad;
 import entity.Colegio;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,13 +20,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  *
- * @author mariajosemendoza
+ * @author joche
  */
 @Stateless
 @Path("colegio")
@@ -87,7 +84,7 @@ public class ColegioFacadeREST extends AbstractFacade<Colegio> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-     @GET
+    @GET
     @Path("/ciudades")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ciudad> ciudades() {
@@ -104,7 +101,7 @@ public class ColegioFacadeREST extends AbstractFacade<Colegio> {
        
         return q.getResultList();
     }
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

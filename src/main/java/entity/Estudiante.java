@@ -20,25 +20,24 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author mariajosemendoza
+ * @author joche
  */
 @Entity
-@Table(name = "Estudiante")
+@Table(name = "estudiante")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Estudiante.findAll", query = "SELECT e FROM Estudiante e")
     , @NamedQuery(name = "Estudiante.findById", query = "SELECT e FROM Estudiante e WHERE e.id = :id")
+    , @NamedQuery(name = "Estudiante.findByFechanacimiento", query = "SELECT e FROM Estudiante e WHERE e.fechanacimiento = :fechanacimiento")
     , @NamedQuery(name = "Estudiante.findByNombre", query = "SELECT e FROM Estudiante e WHERE e.nombre = :nombre")
-    , @NamedQuery(name = "Estudiante.findByFechaNacimiento", query = "SELECT e FROM Estudiante e WHERE e.fechaNacimiento = :fechaNacimiento")
     , @NamedQuery(name = "Estudiante.findByUsername", query = "SELECT e FROM Estudiante e WHERE e.username = :username")
-    , @NamedQuery(name = "Estudiante.findByCurso", query = "SELECT e FROM Estudiante e WHERE e.cursoid.id = :id")})
+, @NamedQuery(name = "Estudiante.findByCurso", query = "SELECT e FROM Estudiante e WHERE e.cursoId.id = :id")})
 public class Estudiante implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,39 +46,26 @@ public class Estudiante implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 255)
+    @Column(name = "fechanacimiento")
+    private String fechanacimiento;
+    @Size(max = 255)
     @Column(name = "nombre")
     private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "fechaNacimiento")
-    private String fechaNacimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 255)
     @Column(name = "username")
     private String username;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudiante")
-    private List<ResultadoAct> resultadoActList;
-    @JoinColumn(name = "Curso_id", referencedColumnName = "id")
+    @JoinColumn(name = "curso_id", referencedColumnName = "id")
     @ManyToOne
-    private Curso cursoid;
+    private Curso cursoId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteId")
+    private List<ActividadEstudiante> actividadEstudianteList;
 
     public Estudiante() {
     }
 
     public Estudiante(Integer id) {
         this.id = id;
-    }
-
-    public Estudiante(Integer id, String nombre, String fechaNacimiento, String username) {
-        this.id = id;
-        this.nombre = nombre;
-        this.fechaNacimiento = fechaNacimiento;
-        this.username = username;
     }
 
     public Integer getId() {
@@ -90,20 +76,20 @@ public class Estudiante implements Serializable {
         this.id = id;
     }
 
+    public String getFechanacimiento() {
+        return fechanacimiento;
+    }
+
+    public void setFechanacimiento(String fechanacimiento) {
+        this.fechanacimiento = fechanacimiento;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getUsername() {
@@ -114,21 +100,21 @@ public class Estudiante implements Serializable {
         this.username = username;
     }
 
+    public Curso getCursoId() {
+        return cursoId;
+    }
+
+    public void setCursoId(Curso cursoId) {
+        this.cursoId = cursoId;
+    }
+
     @XmlTransient
-    public List<ResultadoAct> getResultadoActList() {
-        return resultadoActList;
+    public List<ActividadEstudiante> getActividadEstudianteList() {
+        return actividadEstudianteList;
     }
 
-    public void setResultadoActList(List<ResultadoAct> resultadoActList) {
-        this.resultadoActList = resultadoActList;
-    }
-
-    public Curso getCursoid() {
-        return cursoid;
-    }
-
-    public void setCursoid(Curso cursoid) {
-        this.cursoid = cursoid;
+    public void setActividadEstudianteList(List<ActividadEstudiante> actividadEstudianteList) {
+        this.actividadEstudianteList = actividadEstudianteList;
     }
 
     @Override
@@ -153,7 +139,7 @@ public class Estudiante implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.javeriana.universityapp.entity.Estudiante[ id=" + id + " ]";
+        return "entity.Estudiante[ id=" + id + " ]";
     }
     
 }

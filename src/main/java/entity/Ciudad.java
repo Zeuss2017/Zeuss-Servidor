@@ -7,7 +7,7 @@ package entity;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza
  */
 public enum Ciudad {
     Bogota, Cali, Valledupar, Barranquilla

@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author mariajosemendoza
+ * @author joche
  */
 @Stateless
 @Path("respuesta")

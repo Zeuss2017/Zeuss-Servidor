@@ -19,26 +19,24 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author mariajosemendoza
+ * @author joche
  */
 @Entity
-@Table(name = "Curso")
+@Table(name = "curso")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c")
     , @NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id")
+    , @NamedQuery(name = "Curso.findByActivo", query = "SELECT c FROM Curso c WHERE c.activo = :activo")
     , @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre")
     , @NamedQuery(name = "Curso.findByPeriodo", query = "SELECT c FROM Curso c WHERE c.periodo = :periodo")
-    , @NamedQuery(name = "Curso.findByActivo", query = "SELECT c FROM Curso c WHERE c.activo = :activo")
-    , @NamedQuery(name = "Curso.findByUsername", query = "SELECT c FROM Curso c WHERE c.profesorusername.username = :username")})
-
+ , @NamedQuery(name = "Curso.findByUsername", query = "SELECT c FROM Curso c WHERE c.profesorUsername.username = :username")})
 public class Curso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,25 +45,19 @@ public class Curso implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Column(name = "activo")
+    private Integer activo;
+    @Size(max = 255)
     @Column(name = "nombre")
     private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 255)
     @Column(name = "periodo")
     private String periodo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "activo")
-    private int activo;
-    @OneToMany(mappedBy = "cursoid")
+    @OneToMany(mappedBy = "cursoId")
     private List<Estudiante> estudianteList;
-    @JoinColumn(name = "Profesor_username", referencedColumnName = "username")
-    @ManyToOne(optional = false)
-    private Profesor profesorusername;
+    @JoinColumn(name = "profesor_username", referencedColumnName = "username")
+    @ManyToOne
+    private Profesor profesorUsername;
 
     public Curso() {
     }
@@ -74,19 +66,20 @@ public class Curso implements Serializable {
         this.id = id;
     }
 
-    public Curso(Integer id, String nombre, String periodo, int activo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.periodo = periodo;
-        this.activo = activo;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Integer activo) {
+        this.activo = activo;
     }
 
     public String getNombre() {
@@ -105,14 +98,6 @@ public class Curso implements Serializable {
         this.periodo = periodo;
     }
 
-    public int getActivo() {
-        return activo;
-    }
-
-    public void setActivo(int activo) {
-        this.activo = activo;
-    }
-
     @XmlTransient
     public List<Estudiante> getEstudianteList() {
         return estudianteList;
@@ -122,12 +107,12 @@ public class Curso implements Serializable {
         this.estudianteList = estudianteList;
     }
 
-    public Profesor getProfesorusername() {
-        return profesorusername;
+    public Profesor getProfesorUsername() {
+        return profesorUsername;
     }
 
-    public void setProfesorusername(Profesor profesorusername) {
-        this.profesorusername = profesorusername;
+    public void setProfesorUsername(Profesor profesorUsername) {
+        this.profesorUsername = profesorUsername;
     }
 
     @Override
@@ -152,7 +137,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.javeriana.universityapp.entity.Curso[ id=" + id + " ]";
+        return "entity.Curso[ id=" + id + " ]";
     }
     
 }

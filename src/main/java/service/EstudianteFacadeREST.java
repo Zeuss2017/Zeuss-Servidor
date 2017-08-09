@@ -5,6 +5,8 @@
  */
 package service;
 
+import entity.Ciudad;
+import entity.Colegio;
 import entity.Estudiante;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -23,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author mariajosemendoza
+ * @author joche
  */
 @Stateless
 @Path("estudiante")
@@ -83,8 +85,8 @@ public class EstudianteFacadeREST extends AbstractFacade<Estudiante> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-    
-    @GET
+
+        @GET
     @Path("findByCurso/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Estudiante> findByCurso(@PathParam("id") Integer id) {
