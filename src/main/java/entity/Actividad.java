@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza Rincon
  */
 @Entity
 @Table(name = "actividad")

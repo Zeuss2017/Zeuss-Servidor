@@ -6,10 +6,12 @@
 package service;
 
 import entity.Ejercicio;
+import entity.Respuesta;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,7 +24,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza Rincon
  */
 @Stateless
 @Path("ejercicio")
@@ -82,7 +84,15 @@ public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-
+    @GET
+    @Path("respuestas/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Respuesta> enviarRespuestas(@PathParam("id") Integer id) {
+        Query q=em.createNamedQuery("Ejercicio.findById",Respuesta.class);
+        q.setParameter("id",id);
+        Ejercicio ej=(Ejercicio)q.getSingleResult();
+        return ej.getRespuestaList();
+    }
     @Override
     protected EntityManager getEntityManager() {
         return em;

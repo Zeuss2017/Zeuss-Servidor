@@ -7,6 +7,9 @@ package service;
 
 import entity.Ciudad;
 import entity.Colegio;
+import entity.Curso;
+import entity.Profesor;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza Rincon
  */
 @Stateless
 @Path("colegio")
@@ -84,27 +87,47 @@ public class ColegioFacadeREST extends AbstractFacade<Colegio> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+
     @GET
     @Path("/ciudades")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ciudad> ciudades() {
-        return em.createNamedQuery("Colegio.findCities",Ciudad.class).getResultList();
+        return em.createNamedQuery("Colegio.findCities", Ciudad.class).getResultList();
     }
-    
+
     @GET
     @Path("/ciudades/{ciudad}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Colegio> colegiosDeCiudad(@PathParam("ciudad") String ciudad) {
-        Query q=em.createNamedQuery("Colegio.findByCiudad",Colegio.class);
-        q.setParameter("ciudad",ciudad);
-       
+        Query q = em.createNamedQuery("Colegio.findByCiudad", Colegio.class);
+        q.setParameter("ciudad", ciudad);
+
         return q.getResultList();
     }
-    
+
+    @GET
+    @Path("/cursos/{colegio}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Curso> cursosDeColegio(@PathParam("colegio") Integer colegio) {
+
+        Query q = em.createNamedQuery("Colegio.findById", Colegio.class);
+        q.setParameter("id", colegio);
+        Colegio c = (Colegio) q.getSingleResult();
+        List<Profesor> profesores = c.getProfesorList();
+        List<Curso> cursos = new ArrayList<>();
+        for (Profesor p : profesores) {
+            for (Curso curso : p.getCursoList()) {
+                cursos.add(curso);
+            }
+        }
+        return cursos;
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

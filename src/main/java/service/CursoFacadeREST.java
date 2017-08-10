@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza Rincon
  */
 @Stateless
 @Path("curso")

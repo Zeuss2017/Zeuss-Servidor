@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza Rincon
  */
 @Entity
 @Table(name = "colegio")
@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Colegio.findByDireccion", query = "SELECT c FROM Colegio c WHERE c.direccion = :direccion")
     , @NamedQuery(name = "Colegio.findByNombre", query = "SELECT c FROM Colegio c WHERE c.nombre = :nombre")
     , @NamedQuery(name = "Colegio.findByTelefono", query = "SELECT c FROM Colegio c WHERE c.telefono = :telefono")
-    , @NamedQuery(name = "Colegio.findCities", query = "SELECT DISTINCT(c.ciudad) FROM Colegio c")})
+    , @NamedQuery(name = "Colegio.findCities", query = "SELECT DISTINCT(c.ciudad) FROM Colegio c")
+    , @NamedQuery(name = "Colegio.findCourses", query = "SELECT c.profesorList FROM Colegio c WHERE c.id = :id")})
 public class Colegio implements Serializable {
 
     private static final long serialVersionUID = 1L;

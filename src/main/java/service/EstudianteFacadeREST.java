@@ -7,8 +7,10 @@ package service;
 
 import entity.Ciudad;
 import entity.Colegio;
+import entity.Ejercicio;
 import entity.Estudiante;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza Rincon
  */
 @Stateless
 @Path("estudiante")
@@ -34,6 +36,9 @@ public class EstudianteFacadeREST extends AbstractFacade<Estudiante> {
     @PersistenceContext(unitName = "prueba")
     private EntityManager em;
 
+    @EJB
+    private CursoFacadeREST cursoFacadeREST;
+    
     public EstudianteFacadeREST() {
         super(Estudiante.class);
     }
@@ -86,7 +91,7 @@ public class EstudianteFacadeREST extends AbstractFacade<Estudiante> {
         return String.valueOf(super.count());
     }
 
-        @GET
+    @GET
     @Path("findByCurso/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Estudiante> findByCurso(@PathParam("id") Integer id) {
@@ -96,6 +101,28 @@ public class EstudianteFacadeREST extends AbstractFacade<Estudiante> {
         return q.getResultList();
     }
     
+    @GET
+    @Path("ejercicios/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Ejercicio> enviarEjercicios(@PathParam("id") Integer id) {
+        Query q=em.createNamedQuery("Estudiante.findById",Estudiante.class);
+        q.setParameter("id",id);
+        Estudiante e=(Estudiante)q.getSingleResult();
+        return e.getCursoId().getProfesorUsername().getEjercicioList();
+    }
+    @GET
+    @Path("crear/{nombre}/{username}/{fecha}/{curso}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public String crear(@PathParam("nombre") String nombre,@PathParam("username") String username,@PathParam("fecha") String fecha,@PathParam("curso") Integer curso) {
+        Estudiante e=new Estudiante();
+        e.setFechanacimiento(fecha);
+        e.setNombre(nombre);
+        e.setUsername(username);
+        e.setCursoId(cursoFacadeREST.find(curso));
+        create(e);
+        em.flush();
+        return String.valueOf(e.getId());
+    }
 
     @Override
     protected EntityManager getEntityManager() {

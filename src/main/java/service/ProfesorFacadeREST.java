@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza Rincon
  */
 @Stateless
 @Path("profesor")
