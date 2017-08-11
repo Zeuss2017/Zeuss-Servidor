@@ -5,10 +5,25 @@
  */
 package entity;
 
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Maria Jose Mendoza
  */
-public enum Ciudad {
-    Bogota, Cali, Valledupar, Barranquilla
+@XmlRootElement
+public class Ciudad implements Serializable{
+    private String nombre;
+    public Ciudad(){
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
 }

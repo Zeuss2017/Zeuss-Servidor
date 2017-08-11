@@ -103,7 +103,7 @@ public class EstudianteFacadeREST extends AbstractFacade<Estudiante> {
     
     @GET
     @Path("ejercicios/{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces( MediaType.APPLICATION_JSON)
     public List<Ejercicio> enviarEjercicios(@PathParam("id") Integer id) {
         Query q=em.createNamedQuery("Estudiante.findById",Estudiante.class);
         q.setParameter("id",id);
@@ -112,7 +112,7 @@ public class EstudianteFacadeREST extends AbstractFacade<Estudiante> {
     }
     @GET
     @Path("crear/{nombre}/{username}/{fecha}/{curso}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces (MediaType.APPLICATION_JSON)
     public String crear(@PathParam("nombre") String nombre,@PathParam("username") String username,@PathParam("fecha") String fecha,@PathParam("curso") Integer curso) {
         Estudiante e=new Estudiante();
         e.setFechanacimiento(fecha);

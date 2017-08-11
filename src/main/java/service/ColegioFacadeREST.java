@@ -69,7 +69,7 @@ public class ColegioFacadeREST extends AbstractFacade<Colegio> {
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Colegio> findAll() {
         return super.findAll();
     }
@@ -92,7 +92,14 @@ public class ColegioFacadeREST extends AbstractFacade<Colegio> {
     @Path("/ciudades")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ciudad> ciudades() {
-        return em.createNamedQuery("Colegio.findCities", Ciudad.class).getResultList();
+        List<String> aux= em.createNamedQuery("Colegio.findCities", String.class).getResultList();
+        List<Ciudad> ciudades=new ArrayList<>();
+        for (String s : aux) {
+            Ciudad c = new Ciudad();
+            c.setNombre(s);
+            ciudades.add(c);
+        }
+        return ciudades;
     }
 
     @GET

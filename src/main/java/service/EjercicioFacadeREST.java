@@ -86,7 +86,7 @@ public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
     }
     @GET
     @Path("respuestas/{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces( MediaType.APPLICATION_JSON)
     public List<Respuesta> enviarRespuestas(@PathParam("id") Integer id) {
         Query q=em.createNamedQuery("Ejercicio.findById",Respuesta.class);
         q.setParameter("id",id);
