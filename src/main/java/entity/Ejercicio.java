@@ -39,7 +39,8 @@ import org.eclipse.persistence.annotations.JoinFetch;
     , @NamedQuery(name = "Ejercicio.findByEnunciado3", query = "SELECT e FROM Ejercicio e WHERE e.enunciado3 = :enunciado3")
     , @NamedQuery(name = "Ejercicio.findByEnunciado1", query = "SELECT e FROM Ejercicio e WHERE e.enunciado1 = :enunciado1")
     , @NamedQuery(name = "Ejercicio.findByEnunciado2", query = "SELECT e FROM Ejercicio e WHERE e.enunciado2 = :enunciado2")
-    , @NamedQuery(name = "Ejercicio.findByEscenario", query = "SELECT e FROM Ejercicio e WHERE e.escenario = :escenario")})
+    , @NamedQuery(name = "Ejercicio.findByEscenario", query = "SELECT e FROM Ejercicio e WHERE e.escenario = :escenario")
+    , @NamedQuery(name = "Ejercicio.findByUsername", query = "SELECT e FROM Ejercicio e WHERE e.profesorUsername.username = :username")})
 public class Ejercicio implements Serializable {
 
     private static final long serialVersionUID = 1L;

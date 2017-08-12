@@ -5,13 +5,16 @@
  */
 package service;
 
+import entity.Curso;
 import entity.Ejercicio;
 import entity.Respuesta;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,7 +35,9 @@ public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
 
     @PersistenceContext(unitName = "prueba")
     private EntityManager em;
-
+    
+    @EJB
+    private ProfesorFacadeREST profesorFacadeREST;
     public EjercicioFacadeREST() {
         super(Ejercicio.class);
     }
@@ -93,6 +98,32 @@ public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
         Ejercicio ej=(Ejercicio)q.getSingleResult();
         return ej.getRespuestaList();
     }
+    @POST
+    @Path("create")
+    @Consumes({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    @Transactional
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    public Integer create2(Ejercicio entity) {
+        super.create(entity);
+        em.flush();
+        System.out.println("ID:  "+ entity.getId());
+        return entity.getId();
+    }
+    @GET
+    @Path("profesor/{username}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Ejercicio> profesor(@PathParam("username") String username) {
+        Query q=em.createNamedQuery("Ejercicio.findByUsername",Ejercicio.class);
+        q.setParameter("username",username);
+        return q.getResultList();
+    }
+    @GET
+    @Path("asoProEj/{idEjercicio}/{username}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void asoProEj(@PathParam("idEjercicio") Integer idEjercicio,@PathParam("username") String username) {
+        find(idEjercicio).setProfesorUsername(profesorFacadeREST.find(username));
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
