@@ -118,17 +118,21 @@ public class ColegioFacadeREST extends AbstractFacade<Colegio> {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     public List<Curso> cursosDeColegio(@PathParam("colegio") Integer colegio) {
-
         Query q = em.createNamedQuery("Colegio.findById", Colegio.class);
         q.setParameter("id", colegio);
         Colegio c = (Colegio) q.getSingleResult();
+        
         List<Profesor> profesores = c.getProfesorList();
+        
         List<Curso> cursos = new ArrayList<>();
         for (Profesor p : profesores) {
-            for (Curso curso : p.getCursoList()) {
+            List<Curso> curPro=p.getCursoList();
+            
+            for (Curso curso : curPro) {
                 cursos.add(curso);
             }
         }
+        
         return cursos;
     }
 

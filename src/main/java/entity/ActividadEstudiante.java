@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "ActividadEstudiante.findByErrores", query = "SELECT a FROM ActividadEstudiante a WHERE a.errores = :errores")
     , @NamedQuery(name = "ActividadEstudiante.findByTiempo", query = "SELECT a FROM ActividadEstudiante a WHERE a.tiempo = :tiempo")
     , @NamedQuery(name = "ActividadEstudiante.findByCompletado", query = "SELECT a FROM ActividadEstudiante a WHERE a.completado = :completado")
-    , @NamedQuery(name = "ActividadEstudiante.findByNivelMaximo", query = "SELECT a FROM ActividadEstudiante a WHERE a.nivelMaximo = :nivelMaximo")})
+    , @NamedQuery(name = "ActividadEstudiante.findByNivelMaximo", query = "SELECT a FROM ActividadEstudiante a WHERE a.nivelMaximo = :nivelMaximo")
+    , @NamedQuery(name = "ActividadEstudiante.findByActEst", query = "SELECT a FROM ActividadEstudiante a WHERE a.actividadId.id = :idActividad AND a.estudianteId.id=:idEstudiante")})
 public class ActividadEstudiante implements Serializable {
 
     private static final long serialVersionUID = 1L;

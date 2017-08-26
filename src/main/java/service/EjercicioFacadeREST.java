@@ -38,6 +38,8 @@ public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
     
     @EJB
     private ProfesorFacadeREST profesorFacadeREST;
+    @EJB
+    private ActividadFacadeREST actividadFacadeREST;
     public EjercicioFacadeREST() {
         super(Ejercicio.class);
     }
@@ -118,10 +120,11 @@ public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
         return q.getResultList();
     }
     @GET
-    @Path("asoProEj/{idEjercicio}/{username}")
+    @Path("asoProActEj/{idEjercicio}/{username}/{idActividad}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void asoProEj(@PathParam("idEjercicio") Integer idEjercicio,@PathParam("username") String username) {
+    public void asoProActEj(@PathParam("idEjercicio") Integer idEjercicio,@PathParam("username") String username,@PathParam("idActividad") Integer idActividad) {
         find(idEjercicio).setProfesorUsername(profesorFacadeREST.find(username));
+        find(idEjercicio).setActividadId(actividadFacadeREST.find(idActividad));
     }
     
     @Override

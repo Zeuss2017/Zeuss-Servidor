@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "EjercicioEstudiante.findByErrores", query = "SELECT e FROM EjercicioEstudiante e WHERE e.errores = :errores")
     , @NamedQuery(name = "EjercicioEstudiante.findByTiempo", query = "SELECT e FROM EjercicioEstudiante e WHERE e.tiempo = :tiempo")
     , @NamedQuery(name = "EjercicioEstudiante.findByConsecutivo", query = "SELECT e FROM EjercicioEstudiante e WHERE e.consecutivo = :consecutivo")
-    , @NamedQuery(name = "EjercicioEstudiante.findByNivel", query = "SELECT e FROM EjercicioEstudiante e WHERE e.nivel = :nivel")})
+    , @NamedQuery(name = "EjercicioEstudiante.findByNivel", query = "SELECT e FROM EjercicioEstudiante e WHERE e.nivel = :nivel")
+    , @NamedQuery(name = "EjercicioEstudiante.findByActividadId", query = "SELECT e FROM EjercicioEstudiante e WHERE e.actividadEstudianteid.id = :idActividadEstudiante")})
 public class EjercicioEstudiante implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -5,11 +5,14 @@
  */
 package service;
 
+import entity.ActividadEstudiante;
 import entity.EjercicioEstudiante;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -83,9 +86,35 @@ public class EjercicioEstudianteFacadeREST extends AbstractFacade<EjercicioEstud
         return String.valueOf(super.count());
     }
 
+    @GET
+    @Path("subirEj/{idActividad}/{idEstudiante}/{aciertos}/{errores}/{tiempo}/{consecutivo}/{nivel}")
+    @Consumes({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    @Transactional
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    public Integer subirEj(@PathParam("idActividad") Integer idActividad, @PathParam("idEstudiante") Integer idEstudiante,
+            @PathParam("aciertos") Integer aciertos, @PathParam("errores") Integer errores, @PathParam("consecutivo") Integer consecutivo,
+            @PathParam("tiempo") Integer tiempo, @PathParam("nivel") Integer nivel) {
+        //Crear la entidad
+        EjercicioEstudiante entity = new EjercicioEstudiante();
+        entity.setAciertos(aciertos);
+        entity.setErrores(errores);
+        entity.setTiempo(tiempo);
+        entity.setConsecutivo(consecutivo);
+        entity.setNivel(nivel);
+        //Buscar la actividad estudiante
+        Query q = em.createNamedQuery("ActividadEstudiante.findByActEst", ActividadEstudiante.class);
+        q.setParameter("idActividad", idActividad);
+        q.setParameter("idEstudiante", idEstudiante);
+        entity.setActividadEstudianteid((ActividadEstudiante)q.getSingleResult());
+        super.create(entity);
+        em.flush();
+
+        return entity.getId();
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

@@ -109,11 +109,9 @@ public class ProfesorFacadeREST extends AbstractFacade<Profesor> {
     @Path("/asociarColPro/{idColegio}/{userName}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void asociarColPro(@PathParam("idColegio") Integer idColegio,@PathParam("userName") String userName) throws InterruptedException {
-        
         Colegio c=colegioFacadeRest.find(idColegio);
         Profesor p=find(userName);
         p.setColegioId(c);
-        em.persist(p);
     }
     
     @GET
@@ -132,7 +130,7 @@ public class ProfesorFacadeREST extends AbstractFacade<Profesor> {
         return String.valueOf(valor);
 
     }
-        @GET
+    @GET
     @Path("/colegio/{userName}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Colegio Colegio( @PathParam("userName") String userName)  {

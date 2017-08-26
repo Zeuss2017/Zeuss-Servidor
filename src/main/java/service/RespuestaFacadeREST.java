@@ -35,6 +35,7 @@ public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
     private EntityManager em;
     @EJB
     private EjercicioFacadeREST ejercicioFacadeREST;
+
     public RespuestaFacadeREST() {
         super(Respuesta.class);
     }
@@ -86,26 +87,24 @@ public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-    
+
     @POST
     @Path("create2/{id}")
     @Consumes({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
     @Transactional
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-    public Integer create2(Respuesta entity,@PathParam("id") Integer id) {
-       
-        
+    public Integer create2(Respuesta entity, @PathParam("id") Integer id) {
         super.create(entity);
         em.flush();
         entity.setEjercicioId(ejercicioFacadeREST.find(id));
-        System.out.println("Id resp + id ejercicio " + entity.getId()+'+'+entity.getEjercicioId().getId());
         return entity.getId();
     }
-    
+
+
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

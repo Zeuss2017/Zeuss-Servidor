@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,6 +20,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ejb.EJB;
+import javax.persistence.Query;
 
 /**
  *
@@ -30,7 +33,10 @@ public class ActividadEstudianteFacadeREST extends AbstractFacade<ActividadEstud
 
     @PersistenceContext(unitName = "prueba")
     private EntityManager em;
-
+    @EJB 
+    private ActividadFacadeREST actividadFacadeREST;
+    @EJB
+    private EstudianteFacadeREST estudianteFacadeREST;
     public ActividadEstudianteFacadeREST() {
         super(ActividadEstudiante.class);
     }
@@ -81,6 +87,42 @@ public class ActividadEstudianteFacadeREST extends AbstractFacade<ActividadEstud
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(super.count());
+    }
+    
+    @GET
+    @Path("subirAct/{idActividad}/{idEstudiante}/{aciertos}/{errores}/{tiempo}/{completado}/{nivelmaximo}")
+    @Consumes({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    @Transactional
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    public Integer subirAct(@PathParam("idActividad") Integer idActividad,@PathParam("idEstudiante") Integer idEstudiante
+    ,@PathParam("aciertos") Integer aciertos,@PathParam("errores") Integer errores,@PathParam("completado") Integer completado,
+    @PathParam("tiempo") Integer tiempo,@PathParam("nivelmaximo") Integer nivelmaximo) {
+        ActividadEstudiante entity=new ActividadEstudiante();
+        entity.setAciertos(aciertos);
+        entity.setErrores(errores);
+        entity.setTiempo(tiempo);
+        entity.setCompletado(completado);
+        entity.setNivelMaximo(nivelmaximo);
+        
+        Query q=em.createNamedQuery("ActividadEstudiante.findByActEst",ActividadEstudiante.class);
+        q.setParameter("idActividad", idActividad);
+        q.setParameter("idEstudiante", idEstudiante);
+        if(q.getResultList().isEmpty()){
+            entity.setEstudianteId(estudianteFacadeREST.find(idEstudiante));
+            super.create(entity);
+            em.flush();
+            entity.setActividadId(actividadFacadeREST.find(idActividad));
+            
+        }
+        else{
+            ActividadEstudiante a=(ActividadEstudiante) q.getSingleResult();
+            
+            entity.setId(a.getId());
+            entity.setActividadId(actividadFacadeREST.find(idActividad));
+            entity.setEstudianteId(estudianteFacadeREST.find(idEstudiante));
+            super.edit(entity);
+        }
+        return entity.getId();
     }
 
     @Override
