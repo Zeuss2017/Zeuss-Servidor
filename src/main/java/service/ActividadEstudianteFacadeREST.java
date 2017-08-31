@@ -124,7 +124,15 @@ public class ActividadEstudianteFacadeREST extends AbstractFacade<ActividadEstud
         }
         return entity.getId();
     }
-
+    @GET
+    @Path("pedirAct/{idEstudiante}/{idActividad}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public ActividadEstudiante pedirAct(@PathParam("idEstudiante") Integer idEstudiante,@PathParam("idActividad") Integer idActividad) {
+        Query q=em.createNamedQuery("ActividadEstudiante.findByActEst",ActividadEstudiante.class);
+        q.setParameter("idActividad", idActividad);
+        q.setParameter("idEstudiante", idEstudiante);
+        return (ActividadEstudiante)q.getSingleResult();
+    }
     @Override
     protected EntityManager getEntityManager() {
         return em;

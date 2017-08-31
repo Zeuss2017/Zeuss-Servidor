@@ -5,8 +5,11 @@
  */
 package service;
 
+import entity.ActividadEstudiante;
 import entity.Curso;
+import entity.Estudiante;
 import entity.Profesor;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -85,48 +88,67 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+
     @GET
     @Path("findByUsername/{username}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Curso> findByUsername(@PathParam("username") String username) {
-        
-        Query q=em.createNamedQuery("Curso.findByUsername",Curso.class);
-        q.setParameter("username",username);
+
+        Query q = em.createNamedQuery("Curso.findByUsername", Curso.class);
+        q.setParameter("username", username);
         return q.getResultList();
     }
-    
+
     @POST
     @Path("create")
     @Consumes({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
     @Transactional
     @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
     public Integer create2(Curso entity) {
-       
+
         super.create(entity);
         em.flush();
         System.out.println("Devuelve el id del curso " + entity.getId());
         return entity.getId();
     }
-    
+
     @GET
     @Path("asociarProCurso/{cursoId}/{username}")
     @Transactional
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void asociarProCurso( @PathParam("cursoId") Integer cursoId, @PathParam("username") String username) {
+    public void asociarProCurso(@PathParam("cursoId") Integer cursoId, @PathParam("username") String username) {
         Query q = em.createQuery("SELECT p FROM Profesor p WHERE p.username = :username");
         Profesor user = (Profesor) q.setParameter("username", username).getSingleResult();
-        Curso c=find(cursoId);
+        Curso c = find(cursoId);
         em.persist(c);
         c.setProfesorUsername(user);
-        List<Curso> cursos=user.getCursoList();
+        List<Curso> cursos = user.getCursoList();
         cursos.add(c);
         user.setCursoList(cursos);
         em.persist(user);
-        
+
     }
+
+    @GET
+    @Path("pedirActCurso/{cursoId}/{act}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<ActividadEstudiante> pedirActCurso(@PathParam("cursoId") Integer cursoId,@PathParam("act") Integer act) {
+        Curso c = find(cursoId);
+        List<Estudiante> estudiantes = c.getEstudianteList();
+        List<ActividadEstudiante> ae = new ArrayList<>();
+        for (Estudiante e : estudiantes) {
+            for (ActividadEstudiante a : e.getActividadEstudianteList()) {
+                if(a.getActividadId().getId()==act){
+                    ae.add(a);
+                }
+            }
+        }
+        return ae;
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
