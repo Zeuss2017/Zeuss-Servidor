@@ -9,6 +9,7 @@ import entity.Ciudad;
 import entity.Colegio;
 import entity.Ejercicio;
 import entity.Estudiante;
+import entity.Profesor;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -107,8 +108,10 @@ public class EstudianteFacadeREST extends AbstractFacade<Estudiante> {
     public List<Ejercicio> enviarEjercicios(@PathParam("id") Integer id) {
         Query q=em.createNamedQuery("Estudiante.findById",Estudiante.class);
         q.setParameter("id",id);
-        Estudiante e=(Estudiante)q.getSingleResult();
-        return e.getCursoId().getProfesorUsername().getEjercicioList();
+        Profesor p=((Estudiante)q.getSingleResult()).getCursoId().getProfesorUsername();
+        Query q2=em.createNamedQuery("Ejercicio.findByUsername",Ejercicio.class);
+        q2.setParameter("username", p.getUsername());
+        return q2.getResultList();
     }
     @GET
     @Path("crear/{nombre}/{username}/{fecha}/{curso}")

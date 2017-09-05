@@ -145,6 +145,17 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
         }
         return ae;
     }
+    
+    @GET
+    @Path("pedirCursos/{idColegio}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Curso> pedirCurso(@PathParam("idColegio") Integer idColegio) {
+        
+        Query q=em.createNamedQuery("Curso.findByIdColegio",Curso.class);
+        q.setParameter("idColegio", idColegio);
+        return q.getResultList();
+    }
 
     @Override
     protected EntityManager getEntityManager() {
