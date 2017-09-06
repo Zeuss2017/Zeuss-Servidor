@@ -30,6 +30,7 @@ service\EjercicioFacadeREST.class
 entity\Respuesta.class
 service\ColegioFacadeREST.class
 entity\EjercicioEstudiante_.class
+entity\PromediosCurso.class
 entity\Curso_.class
 service\NivelComparator.class
 security\AuthFilter.class

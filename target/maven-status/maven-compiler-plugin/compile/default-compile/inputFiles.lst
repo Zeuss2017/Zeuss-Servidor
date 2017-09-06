@@ -20,6 +20,7 @@ C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\ApplicationConfig.
 C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\security\AuthFilter.java
 C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\CursoFacadeREST.java
 C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\EjercicioEstudiante.java
+C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\entity\PromediosCurso.java
 C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\RespuestaFacadeREST.java
 C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\security\CorsFilter.java
 C:\Users\joche\Documents\Zeuss-Servidor\src\main\java\service\ColegioFacadeREST.java

@@ -37,6 +37,7 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
     @PersistenceContext(unitName = "prueba")
     private EntityManager em;
 
+
     public CursoFacadeREST() {
         super(Curso.class);
     }
@@ -157,6 +158,8 @@ public class CursoFacadeREST extends AbstractFacade<Curso> {
         return q.getResultList();
     }
 
+
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

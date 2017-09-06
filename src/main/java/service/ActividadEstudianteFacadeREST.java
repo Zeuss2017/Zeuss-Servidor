@@ -6,6 +6,9 @@
 package service;
 
 import entity.ActividadEstudiante;
+import entity.Curso;
+import entity.PromediosCurso;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -132,6 +135,48 @@ public class ActividadEstudianteFacadeREST extends AbstractFacade<ActividadEstud
         q.setParameter("idActividad", idActividad);
         q.setParameter("idEstudiante", idEstudiante);
         return (ActividadEstudiante)q.getSingleResult();
+    }
+    
+    @GET
+    @Path("promediosCurso/{idEstudiante}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public PromediosCurso promediosCurso(@PathParam("idEstudiante") Integer idEstudiante) {
+        Curso c= estudianteFacadeREST.find(idEstudiante).getCursoId();
+        Query q=em.createNamedQuery("ActividadEstudiante.findByCurso",ActividadEstudiante.class);
+        q.setParameter("idCurso", c.getId());
+        List<ActividadEstudiante> ae=q.getResultList();
+        float[] errores = new float[3];
+        float[] tiempo = new float[3];
+        int[] cant = new int[3];
+        
+        for (ActividadEstudiante a : ae) {
+            if(a.getActividadId().getId()==1){
+                errores[0]=errores[0]+a.getErrores();
+                tiempo[0]=tiempo[0]+a.getTiempo();
+                cant[0]++;
+            }
+            if(a.getActividadId().getId()==2){
+                errores[1]=errores[1]+a.getErrores();
+                tiempo[1]=tiempo[1]+a.getTiempo();
+                cant[1]++;
+            }
+            if(a.getActividadId().getId()==3){
+                errores[2]=errores[2]+a.getErrores();
+                tiempo[2]=tiempo[2]+a.getTiempo();
+                cant[2]++;
+            }
+        }
+        PromediosCurso pc=new PromediosCurso();
+        
+        pc.setErrores1(errores[0]/cant[0]);
+        pc.setErrores2(errores[1]/cant[1]);
+        pc.setErrores3(errores[2]/cant[2]);
+        
+        pc.setTiempo1(tiempo[0]/cant[0]);
+        pc.setTiempo2(tiempo[1]/cant[1]);
+        pc.setTiempo3(tiempo[2]/cant[2]);
+
+        return pc; 
     }
     @Override
     protected EntityManager getEntityManager() {
