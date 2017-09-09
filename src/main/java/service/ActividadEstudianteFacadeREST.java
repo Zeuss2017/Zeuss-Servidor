@@ -24,6 +24,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ejb.EJB;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -131,10 +132,16 @@ public class ActividadEstudianteFacadeREST extends AbstractFacade<ActividadEstud
     @Path("pedirAct/{idEstudiante}/{idActividad}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public ActividadEstudiante pedirAct(@PathParam("idEstudiante") Integer idEstudiante,@PathParam("idActividad") Integer idActividad) {
+        try{
         Query q=em.createNamedQuery("ActividadEstudiante.findByActEst",ActividadEstudiante.class);
         q.setParameter("idActividad", idActividad);
         q.setParameter("idEstudiante", idEstudiante);
+       
         return (ActividadEstudiante)q.getSingleResult();
+    } catch(NoResultException e) {
+        return null;
+    }
+        
     }
     
     @GET
