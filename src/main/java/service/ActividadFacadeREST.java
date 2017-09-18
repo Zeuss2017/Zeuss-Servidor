@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author mariajosemendoza
+ * @author Maria Jose Mendoza Rincon
  */
 @Stateless
 @Path("actividad")

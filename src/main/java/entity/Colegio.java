@@ -8,7 +8,6 @@ package entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,26 +17,27 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author mariajosemendoza
+ * @author Maria Jose Mendoza Rincon
  */
 @Entity
-@Table(name = "Colegio")
+@Table(name = "colegio")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Colegio.findAll", query = "SELECT c FROM Colegio c")
     , @NamedQuery(name = "Colegio.findById", query = "SELECT c FROM Colegio c WHERE c.id = :id")
-    , @NamedQuery(name = "Colegio.findByNombre", query = "SELECT c FROM Colegio c WHERE c.nombre = :nombre")
-    , @NamedQuery(name = "Colegio.findByCiudad", query = "SELECT c FROM Colegio c WHERE c.ciudad = :ciudad")
-    , @NamedQuery(name = "Colegio.findByTelefono", query = "SELECT c FROM Colegio c WHERE c.telefono = :telefono")
     , @NamedQuery(name = "Colegio.findByCalendario", query = "SELECT c FROM Colegio c WHERE c.calendario = :calendario")
-    , @NamedQuery(name = "Colegio.findByDireccion", query = "SELECT c FROM Colegio c WHERE c.direccion = :direccion")})
+    , @NamedQuery(name = "Colegio.findByCiudad", query = "SELECT c FROM Colegio c WHERE c.ciudad = :ciudad")
+    , @NamedQuery(name = "Colegio.findByDireccion", query = "SELECT c FROM Colegio c WHERE c.direccion = :direccion")
+    , @NamedQuery(name = "Colegio.findByNombre", query = "SELECT c FROM Colegio c WHERE c.nombre = :nombre")
+    , @NamedQuery(name = "Colegio.findByTelefono", query = "SELECT c FROM Colegio c WHERE c.telefono = :telefono")
+    , @NamedQuery(name = "Colegio.findCities", query = "SELECT DISTINCT(c.ciudad) FROM Colegio c")
+    , @NamedQuery(name = "Colegio.findCourses", query = "SELECT c.profesorList FROM Colegio c WHERE c.id = :id")})
 public class Colegio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,25 +46,21 @@ public class Colegio implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "nombre")
-    private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "ciudad")
-    private String ciudad;
-    @Column(name = "telefono")
-    private Integer telefono;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "calendario")
     private String calendario;
-    @Size(max = 2147483647)
+    @Size(max = 255)
+    @Column(name = "ciudad")
+    private String ciudad;
+    @Size(max = 255)
     @Column(name = "direccion")
     private String direccion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "colegioid")
+    @Size(max = 255)
+    @Column(name = "nombre")
+    private String nombre;
+    @Column(name = "telefono")
+    private Integer telefono;
+    @OneToMany(mappedBy = "colegioId")
     private List<Profesor> profesorList;
 
     public Colegio() {
@@ -72,12 +68,6 @@ public class Colegio implements Serializable {
 
     public Colegio(Integer id) {
         this.id = id;
-    }
-
-    public Colegio(Integer id, String nombre, String ciudad) {
-        this.id = id;
-        this.nombre = nombre;
-        this.ciudad = ciudad;
     }
 
     public Integer getId() {
@@ -88,12 +78,12 @@ public class Colegio implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getCalendario() {
+        return calendario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCalendario(String calendario) {
+        this.calendario = calendario;
     }
 
     public String getCiudad() {
@@ -104,28 +94,28 @@ public class Colegio implements Serializable {
         this.ciudad = ciudad;
     }
 
-    public Integer getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(Integer telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getCalendario() {
-        return calendario;
-    }
-
-    public void setCalendario(String calendario) {
-        this.calendario = calendario;
-    }
-
     public String getDireccion() {
         return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(Integer telefono) {
+        this.telefono = telefono;
     }
 
     @XmlTransient
@@ -159,7 +149,7 @@ public class Colegio implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.javeriana.universityapp.entity.Colegio[ id=" + id + " ]";
+        return "entity.Colegio[ id=" + id + " ]";
     }
     
 }

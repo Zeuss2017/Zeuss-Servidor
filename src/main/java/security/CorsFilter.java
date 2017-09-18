@@ -12,7 +12,7 @@ import javax.ws.rs.ext.Provider;
 
 /**
  *
- * @author joche
+ * @author Maria Jose Mendoza Rincon
  */
 @Provider
 public class CorsFilter implements ContainerResponseFilter {

@@ -25,7 +25,7 @@ import javax.ws.rs.core.Response;
 /**
  * REST Web Service
  *
- * @author jpavlich
+ * @author Maria Jose Mendoza
  */
 @Path("auth")
 public class AuthService {

@@ -8,7 +8,6 @@ package entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,23 +17,22 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author mariajosemendoza
+ * @author Maria Jose Mendoza Rincon
  */
 @Entity
-@Table(name = "Actividad")
+@Table(name = "actividad")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Actividad.findAll", query = "SELECT a FROM Actividad a")
     , @NamedQuery(name = "Actividad.findById", query = "SELECT a FROM Actividad a WHERE a.id = :id")
-    , @NamedQuery(name = "Actividad.findByNombre", query = "SELECT a FROM Actividad a WHERE a.nombre = :nombre")
     , @NamedQuery(name = "Actividad.findByDescripcion", query = "SELECT a FROM Actividad a WHERE a.descripcion = :descripcion")
+    , @NamedQuery(name = "Actividad.findByNombre", query = "SELECT a FROM Actividad a WHERE a.nombre = :nombre")
     , @NamedQuery(name = "Actividad.findByObjetivo", query = "SELECT a FROM Actividad a WHERE a.objetivo = :objetivo")})
 public class Actividad implements Serializable {
 
@@ -44,35 +42,25 @@ public class Actividad implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "nombre")
-    private String nombre;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "descripcion")
     private String descripcion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(max = 255)
+    @Column(name = "nombre")
+    private String nombre;
+    @Size(max = 255)
     @Column(name = "objetivo")
     private String objetivo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividadid")
+    @OneToMany(mappedBy = "actividadId")
+    private List<ActividadEstudiante> actividadEstudianteList;
+    @OneToMany(mappedBy = "actividadId")
     private List<Ejercicio> ejercicioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividad")
-    private List<ResultadoAct> resultadoActList;
 
     public Actividad() {
     }
 
     public Actividad(Integer id) {
         this.id = id;
-    }
-
-    public Actividad(Integer id, String nombre, String objetivo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.objetivo = objetivo;
     }
 
     public Integer getId() {
@@ -83,20 +71,20 @@ public class Actividad implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getObjetivo() {
@@ -108,21 +96,21 @@ public class Actividad implements Serializable {
     }
 
     @XmlTransient
+    public List<ActividadEstudiante> getActividadEstudianteList() {
+        return actividadEstudianteList;
+    }
+
+    public void setActividadEstudianteList(List<ActividadEstudiante> actividadEstudianteList) {
+        this.actividadEstudianteList = actividadEstudianteList;
+    }
+
+    @XmlTransient
     public List<Ejercicio> getEjercicioList() {
         return ejercicioList;
     }
 
     public void setEjercicioList(List<Ejercicio> ejercicioList) {
         this.ejercicioList = ejercicioList;
-    }
-
-    @XmlTransient
-    public List<ResultadoAct> getResultadoActList() {
-        return resultadoActList;
-    }
-
-    public void setResultadoActList(List<ResultadoAct> resultadoActList) {
-        this.resultadoActList = resultadoActList;
     }
 
     @Override
@@ -147,7 +135,7 @@ public class Actividad implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.javeriana.universityapp.entity.Actividad[ id=" + id + " ]";
+        return "entity.Actividad[ id=" + id + " ]";
     }
     
 }

@@ -11,7 +11,7 @@ import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 /**
  *
- * @author jpavlich
+ * @author Maria Jose Mendoza
  */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
@@ -33,16 +33,17 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(security.AuthFilter.class);     
+        resources.add(security.AuthFilter.class);
         resources.add(security.CorsFilter.class);
+        resources.add(service.ActividadEstudianteFacadeREST.class);
         resources.add(service.ActividadFacadeREST.class);
         resources.add(service.AuthService.class);
         resources.add(service.ColegioFacadeREST.class);
         resources.add(service.CursoFacadeREST.class);
+        resources.add(service.EjercicioEstudianteFacadeREST.class);
         resources.add(service.EjercicioFacadeREST.class);
         resources.add(service.EstudianteFacadeREST.class);
         resources.add(service.ProfesorFacadeREST.class);
         resources.add(service.RespuestaFacadeREST.class);
-        resources.add(service.ResultadoActFacadeREST.class);
     }
 }

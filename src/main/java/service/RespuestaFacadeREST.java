@@ -5,11 +5,14 @@
  */
 package service;
 
+import entity.Curso;
 import entity.Respuesta;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author mariajosemendoza
+ * @author Maria Jose Mendoza Rincon
  */
 @Stateless
 @Path("respuesta")
@@ -30,6 +33,8 @@ public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
 
     @PersistenceContext(unitName = "prueba")
     private EntityManager em;
+    @EJB
+    private EjercicioFacadeREST ejercicioFacadeREST;
 
     public RespuestaFacadeREST() {
         super(Respuesta.class);
@@ -83,9 +88,23 @@ public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
         return String.valueOf(super.count());
     }
 
+    @POST
+    @Path("create2/{id}")
+    @Consumes({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    @Transactional
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    public Integer create2(Respuesta entity, @PathParam("id") Integer id) {
+        super.create(entity);
+        em.flush();
+        entity.setEjercicioId(ejercicioFacadeREST.find(id));
+        return entity.getId();
+    }
+
+
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
